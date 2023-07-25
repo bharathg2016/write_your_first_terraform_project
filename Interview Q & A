@@ -1,0 +1,26 @@
+1. What is IAC? why Terraform?
+2. what are modules in Terraform?
+3. What is a state file in Terraform?
+4. What are some of the most common Terraform CLI commands that you use everyday?
+5. What is Terraform backend?
+6. what is Terraform remote backend?
+7. How do you handle secrets in Terraform?
+8. What is resource graph in Terraform?
+9. What is Terraform state locking?
+10. What is a tainted Terraform resource?
+11. what is Terraform state rollback?
+
+Answers:
+
+1. IAC is process of managing Infra through code and not through the manual process.
+Terraform works on the principal of API as code. It suppports a lot of providers whether it is cloud or on-premise.
+2. Modules are logical grouping of resources.If the other teams also want to use the same scirpts with same requirements they will use modules which were prevoiusly written by us.
+3. It keeps the track of resources that Terraform is managing. What ever the resources that we have created in Terrafrom is stored in the state file.
+4. terraform plan, terraform apply, terraform refresh, terraform init
+5. Terraform backend is what Terraform stores its state file. So wher ever you are storing your state file that becomes your Terraform backend.
+6. If the devs are working on the same terraform script like 1 is trying to create resource and the other is trying to delete, now AWS is receiving a conflicting instruction from your terraform scripts, so to avoid this, we keep this in a terraform state file in a common remote backend like S3 bucket, we enable locking.
+7. we use terraform backend and we will enforce it with IAM or RBAC , like only restricted people an access S3 bucket
+8. It is dependecny graph and by using this Terraform will show the output of Terraform plan , Terraform refresh
+9. We dont want multiple people to run the terraform scripts at a time, so to avoid this we use terraform state locking, example is we can use dynamoDB and integrate with S3, so that it keeps a log and track of who is running terraform scripts
+10. tain command in terraform informs that a particular object has been degraded or damaged, so that terraform marks this resource as tainted in the terraform state file and next time when you run terraform plan, it proples to replace the damaged object
+11. by using AWS cli we can get the versions of S3 and we take a copy of previuos version , copy in youe local and then push local copy back to your S3 , so old becomes new one, in this you can roll back and then execute terraform apply.
